@@ -1,0 +1,20 @@
+---
+packages:
+- name: elasticsearch-plugins
+  version: 6577b53e7208a9a8d53887f04415bc4777a92c7c
+  fingerprint: 6577b53e7208a9a8d53887f04415bc4777a92c7c
+  sha1: 56ad04b25597bc8402a8a2d7001be581362e4006
+  dependencies: []
+jobs:
+- name: elasticsearch-plugins
+  version: d7b04fcf59b4609a474d27f141fa2107ed58b1a1
+  fingerprint: d7b04fcf59b4609a474d27f141fa2107ed58b1a1
+  sha1: 04553d172d6720deaf1c373cec3635db99e6ba83
+license:
+  version: d2a30850d1f007eb59a6710918da0abc17692263
+  fingerprint: d2a30850d1f007eb59a6710918da0abc17692263
+  sha1: 30952288beca4fbdcf7b55de3a5df7ab3036e23c
+commit_hash: b363d5ce
+uncommitted_changes: true
+name: elasticsearch-plugins
+version: '1'
