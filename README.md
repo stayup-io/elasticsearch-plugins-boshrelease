@@ -1,53 +1,56 @@
 # BOSH Release for elasticsearch-plugins
 
-## Usage
+Provides package with HQ and kopf es plugins. This can later be integrated on any elasticsearch bosh deployment.
 
-To use this bosh release, first upload it to your bosh:
+## Integration with logsearch
+
+Upload release
 
 ```
-bosh target BOSH_HOST
 git clone https://github.com/cloudfoundry-community/elasticsearch-plugins-boshrelease.git
 cd elasticsearch-plugins-boshrelease
 bosh upload release releases/elasticsearch-plugins-1.yml
 ```
 
-For [bosh-lite](https://github.com/cloudfoundry/bosh-lite), you can quickly create a deployment manifest & deploy a cluster:
+On your logsearch deployment collocate this release:
 
 ```
-templates/make_manifest warden
-bosh -n deploy
-```
-
-For AWS EC2, create a single VM:
-
-```
-templates/make_manifest aws-ec2
-bosh -n deploy
-```
-
-### Override security groups
-
-For AWS & Openstack, the default deployment assumes there is a `default` security group. If you wish to use a different security group(s) then you can pass in additional configuration when running `make_manifest` above.
-
-Create a file `my-networking.yml`:
-
-``` yaml
----
-networks:
-  - name: elasticsearch-plugins1
-    type: dynamic
-    cloud_properties:
-      security_groups:
-        - elasticsearch-plugins
-```
-
-Where `- elasticsearch-plugins` means you wish to use an existing security group called `elasticsearch-plugins`.
-
-You now suffix this file path to the `make_manifest` command:
-
-```
-templates/make_manifest openstack-nova my-networking.yml
-bosh -n deploy
+...
+releases:
+- name: logsearch
+  version: latest
+- name: elasticsearch-plugins
+  version: latest
+...
+jobs:
+...
+- name: api
+  releases:
+  - name: logsearch
+  templates:
+  - name: elasticsearch-plugins
+    release: elasticsearch-plugins
+  - name: elasticsearch
+    release: logsearch
+  - name: api
+    release: logsearch
+  - name: kibana
+    release: logsearch
+  update:
+    serial: true
+  instances: 1
+  resource_pool: small_z1
+  networks:
+  - name: microbosh-network
+    static_ips:
+    - 10.0.23.11
+  properties:
+    elasticsearch:
+      plugins:
+      - hq: file:///var/vcap/packages/elasticsearch-plugins/elasticsearch-hq.zip
+      - kopf: file:///var/vcap/packages/elasticsearch-plugins/elasticsearch-kopf.zip
+      node:
+        allow_data: false
 ```
 
 ### Development
@@ -72,5 +75,3 @@ By default the version number will be bumped to the next major number. You can s
 ```
 bosh create release --final --version 2.1
 ```
-
-After the first release you need to contact [Dmitriy Kalinin](mailto://dkalinin@pivotal.io) to request your project is added to https://bosh.io/releases (as mentioned in README above).

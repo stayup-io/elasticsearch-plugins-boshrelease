@@ -1,13 +1,6 @@
 ---
 name: elasticsearch-plugins
-packages: []
-templates:
-  bin/monit_debugger: bin/monit_debugger
-  bin/elasticsearch_plugins_ctl: bin/elasticsearch_plugins_ctl
-  config/elasticsearch_plugins.conf.erb: config/elasticsearch_plugins.conf
-  data/properties.sh.erb: data/properties.sh
-  helpers/ctl_setup.sh: helpers/ctl_setup.sh
-  helpers/ctl_utils.sh: helpers/ctl_utils.sh
-properties:
-  elasticsearch_plugins.leader_address:
-    description: Hostname/IP to the leader/master of the cluster
+packages: 
+  - elasticsearch-plugins
+templates: {}
+properties: {}
