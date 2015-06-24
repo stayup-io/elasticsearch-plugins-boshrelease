@@ -1,0 +1,5 @@
+check process elasticsearch_plugins
+  with pidfile /var/vcap/sys/run/elasticsearch_plugins/elasticsearch_plugins.pid
+  start program "/var/vcap/jobs/elasticsearch_plugins/bin/monit_debugger elasticsearch_plugins_ctl '/var/vcap/jobs/elasticsearch_plugins/bin/elasticsearch_plugins_ctl start'"
+  stop program "/var/vcap/jobs/elasticsearch_plugins/bin/monit_debugger elasticsearch_plugins_ctl '/var/vcap/jobs/elasticsearch_plugins/bin/elasticsearch_plugins_ctl stop'"
+  group vcap
