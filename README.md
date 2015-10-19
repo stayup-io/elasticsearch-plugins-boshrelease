@@ -9,7 +9,7 @@ Upload release
 ```
 git clone https://github.com/cloudfoundry-community/elasticsearch-plugins-boshrelease.git
 cd elasticsearch-plugins-boshrelease
-bosh upload release releases/elasticsearch-plugins-1.yml
+bosh upload release releases/elasticsearch-plugins-2.yml
 ```
 
 On your logsearch deployment collocate this release:
